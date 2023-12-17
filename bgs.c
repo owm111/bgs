@@ -89,16 +89,12 @@ drawbg(void) {
 			ny = monitors[i].y + (monitors[i].h - nh) / 2;
 			break;
 		case ModeZoom:
-			nw = monitors[i].w;
-			nh = monitors[i].h;
-			if(w > h && (w / h > (monitors[i].w / monitors[i].h))) {
-				nx = monitors[i].x + (monitors[i].w - nw) / 2;
-				ny = monitors[i].y + (int)ceil(h * nx / w) / 2;
-			}
-			else {
-				ny = monitors[i].y + (monitors[i].h - nh) / 2;
-				nx = monitors[i].x + (int)ceil(w * ny / h) / 2;
-			}
+			factor = MIN((double)w / monitors[i].w,
+				     (double)h / monitors[i].h);
+			nw = w / factor;
+			nh = h / factor;
+			nx = monitors[i].x + (monitors[i].w - nw) / 2;
+			ny = monitors[i].y + (monitors[i].h - nh) / 2;
 			break;
 		default: /* ModeScale */
 			factor = MAX((double)w / monitors[i].w,
